@@ -59,3 +59,21 @@ ASTRO_OUT_DIR=~/ppk-dist npm run build
 ## PDF
 
 `scripts/build-assets.mjs` рисует листы векторно через pdf-lib: пеннант 5×7", пунктир 0,25 pt, две дырки под шнур, подпись `partyprintkit.com` вне зоны реза. Шрифт пока Helvetica; при переходе на Fraunces нужна лицензия на встраивание (`DESIGN.md` §1).
+
+## Деплой
+
+Vercel, статика. Настройки проекта:
+
+| поле | значение |
+|---|---|
+| Root Directory | `site` |
+| Framework Preset | Astro |
+| Build Command | `npm run build` (по умолчанию) |
+| Output Directory | `dist` (по умолчанию) |
+| Node.js Version | 20 или новее |
+
+`Root Directory` обязателен: в корне репозитория нет `package.json`, и сборка без него не найдёт проект.
+
+`vercel.json` лежит рядом с `package.json`, то есть внутри `site/`, потому что Vercel читает его от Root Directory. В нём заголовки кэша (`/_astro/` на год как неизменяемый, `/downloads/` и `/social/` на сутки) и `trailingSlash: true` под `astro.config.mjs`.
+
+Python на сборке не нужен: PDF и растры лежат в репозитории готовыми, скрипты запускаются только вручную через `npm run assets`.
