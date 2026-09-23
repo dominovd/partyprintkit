@@ -1,0 +1,41 @@
+---
+import { Image } from 'astro:assets';
+import { shots, type ShotId } from '../data/images';
+
+interface Props {
+  id: ShotId;
+  sizes?: string;
+  widths?: number[];
+  class?: string;
+  loading?: 'lazy' | 'eager';
+  altOverride?: string;
+}
+
+const {
+  id,
+  sizes = '100vw',
+  widths = [400, 700, 1000, 1400],
+  class: cls = '',
+  loading = 'lazy',
+  altOverride,
+} = Astro.props;
+
+const shot = shots[id];
+const files = import.meta.glob<{ default: ImageMetadata }>('../assets/photos/*.{png,jpg,jpeg,webp}', {
+  eager: true,
+});
+const entry = files[`../assets/photos/${shot.file}`];
+const alt = altOverride ?? shot.alt;
+---
+
+{
+  entry ? (
+    <Image src={entry.default} alt={alt} widths={widths} sizes={sizes} class={`shot ${cls}`} loading={loading} />
+  ) : (
+    <div class={`shot-missing ${cls}`} style={`aspect-ratio:${shot.ratio}`} data-shot={id}>
+      <b>Shot needed</b>
+      <span>{shot.file}</span>
+      <span>{shot.brief}</span>
+    </div>
+  )
+}

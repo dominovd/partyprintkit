@@ -1,0 +1,254 @@
+---
+import Base from '../layouts/Base.astro';
+import Shot from '../components/Shot.astro';
+import Link from '../components/Link.astro';
+import DownloadButton from '../components/DownloadButton.astro';
+import TrustBar from '../components/TrustBar.astro';
+import FaqBlock from '../components/FaqBlock.astro';
+import { pieces } from '../data/kits';
+import { routes, site } from '../data/site';
+import { pinUrl } from '../data/pin';
+
+const socialImage = '/social/birthday-kit-geometric-1000x1500.jpg';
+const kitPdf = '/downloads/birthday-kit-geometric-a4.pdf';
+const kitPng = '/downloads/birthday-kit-geometric-1000x1500.png';
+
+const pin = pinUrl({
+  path: '/',
+  media: socialImage,
+  description: 'Free printable party decorations: banner letters, party hats, cupcake toppers, signs and favor tags in one coordinated kit.',
+});
+
+const faq = [
+  {
+    q: 'What paper should I use?',
+    a: 'Regular paper works for banners. Cardstock is best for hats, toppers, signs and favor tags.',
+  },
+  {
+    q: 'Which file formats are included?',
+    a: 'Print-ready PDF files for A4 and US Letter, plus high-resolution PNG versions for saving and sharing.',
+  },
+  {
+    q: 'Can I print everything at home?',
+    a: 'Yes. Every sheet is designed for A4 and US Letter with ink-friendly colors and clear cut lines.',
+  },
+  {
+    q: 'Can I download just one piece?',
+    a: 'Yes. Choose an individual printable or download the complete coordinated kit in one PDF.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Free Printable Party Decorations',
+    url: site.origin + '/',
+    primaryImageOfPage: {
+      '@type': 'ImageObject',
+      contentUrl: site.origin + socialImage,
+      width: 1000,
+      height: 1500,
+      caption: 'Printable birthday party decoration kit sheets',
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map((item) => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: { '@type': 'Answer', text: item.a },
+    })),
+  },
+];
+---
+
+<Base
+  title="Free Printable Party Decorations: Banners, Hats, Toppers & Tags"
+  description="Free printable party decorations that belong together: banner letters, party hats, cupcake toppers, signs and favor tags. One PDF per occasion, no editor and no sign-up."
+  path="/"
+  socialImage={socialImage}
+  jsonLd={jsonLd}
+>
+  <!-- hero -->
+  <section class="wrap hero">
+    <div>
+      <p class="eyebrow">Print the pieces, make the party</p>
+      <h1 class="h1">Free Printable Party Decorations</h1>
+      <p class="lede hero__lede">
+        Banner letters, party hats, cupcake toppers, signs and tags that already belong together.
+        Download a complete kit: no editor, no account, no paywall.
+      </p>
+      <div class="hero__actions">
+        <DownloadButton href={kitPdf} label="Download birthday kit ↓" newTab />
+        <Link route={routes.printables} class="text-link" label="Browse printables →" />
+      </div>
+      <p class="hero__note">
+        Shown here: the birthday kit, the first one finished. Every kit that follows arrives the
+        same way, as ready-to-print sheets rather than a template to edit.
+      </p>
+    </div>
+
+    <div class="hero__media">
+      <div class="hero__photo">
+        <Shot id="home-hero-birthday-table" loading="eager" sizes="(max-width: 900px) 92vw, 640px" />
+        <span class="hero__badge">Printed at home, real kit</span>
+      </div>
+      <div class="hero__bar">
+        <DownloadButton href={kitPdf} label="Download PDF" variant="ghost" newTab class="hero__barbtn" />
+        <DownloadButton href={kitPng} label="Download PNG" variant="ghost" class="hero__barbtn" />
+        <a class="button hero__barbtn" href={pin} target="_blank" rel="noopener">Save to Pinterest</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- the kit is the product -->
+  <section class="claim">
+    <div class="wrap claim__inner">
+      <div class="claim__photo">
+        <Shot id="kit-printing-at-home" sizes="(max-width: 900px) 92vw, 500px" />
+      </div>
+      <div>
+        <p class="eyebrow">The complete kit is the product</p>
+        <h2 class="h2">One download.<br />A whole party look.</h2>
+        <p class="lede claim__lede">
+          Not another template to finish in an editor. Every kit arrives as ready-to-print sheets:
+          coordinated, practical and made to become real decorations.
+        </p>
+        <ul class="claim__ticks">
+          <li>Banner letters, hats, toppers, signs and tags in one style</li>
+          <li>A4 and US Letter PDFs, plus high-resolution PNG files</li>
+          <li>Ink-friendly artwork and clear cut lines for home printers</li>
+        </ul>
+        <div class="claim__actions">
+          <DownloadButton href={kitPdf} label="Get the complete kit ↓" newTab />
+          <Link route={routes.printables} class="text-link" label="Preview all sheets →" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <TrustBar
+    headline="Real printables. Ready right now."
+    items={['No account required', 'Made for home printers', 'Cut, assemble and hang']}
+  />
+
+  <!-- featured kit: the only place the vertical indexed asset appears -->
+  <section class="featured">
+    <div class="wrap featured__inner">
+      <div class="featured__media">
+        <div class="featured__sheet">
+          <Shot id="kit-sheets-flatlay-vertical" sizes="(max-width: 900px) 46vw, 260px" />
+        </div>
+        <div class="featured__result">
+          <Shot id="banner-hung-geometric" sizes="(max-width: 900px) 46vw, 320px" />
+        </div>
+      </div>
+      <div>
+        <p class="eyebrow featured__eyebrow">Featured free download</p>
+        <h2 class="h2">Birthday Party Decoration Kit</h2>
+        <p class="featured__lede">
+          See the sheets and the finished result side by side. Download the complete printable kit
+          now, or take only the banner, hats or toppers you need.
+        </p>
+        <div class="pills">
+          <span>PDF · A4</span><span>PDF · US Letter</span><span>PNG · 1000×1500</span>
+        </div>
+        <div class="featured__actions">
+          <DownloadButton href={kitPdf} label="Download complete PDF ↓" newTab />
+          <DownloadButton href={kitPng} label="Download PNG" variant="ghost" />
+          <a class="button button--ghost" href={pin} target="_blank" rel="noopener">Save to Pinterest</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- pieces. One slot, one shot: five different macro frames, not five crops of one. -->
+  <section class="wrap block">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Every piece in the kit</p>
+        <h2 class="h3">Choose the thing you want to make.</h2>
+      </div>
+      <Link route={routes.printables} class="text-link" label="See all printables →" />
+    </div>
+    <div class="grid grid--3">
+      {
+        pieces.map((piece) => (
+          <Link route={piece.route} class="card">
+            <div class="card__media card__media--4x5">
+              <Shot id={piece.shot} sizes="(max-width: 900px) 45vw, 230px" />
+            </div>
+            <div class="card__body">
+              <h3 class="card__title-sm">{piece.title}</h3>
+              <p>{piece.blurb}</p>
+            </div>
+          </Link>
+        ))
+      }
+    </div>
+  </section>
+
+  <FaqBlock
+    eyebrow="Before you print"
+    heading="Everything needed. Nothing in the way."
+    lede="Download first, then print on the paper you already have."
+    items={faq}
+  />
+</Base>
+
+<style>
+  .hero { display: grid; grid-template-columns: 43% 57%; gap: 55px; align-items: center; padding: 62px 24px 66px; }
+  .hero__lede { max-width: 510px; margin: 22px 0 27px; }
+  .hero__actions { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
+  .hero__note { font-size: 12px; color: var(--ink-soft); margin: 18px 0 0; max-width: 440px; line-height: 1.5; }
+  .hero__media { position: relative; }
+  .hero__photo { position: relative; border-radius: var(--radius-sm); overflow: hidden; box-shadow: var(--shadow-card); aspect-ratio: 3 / 2; }
+  .hero__photo :global(img) { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .hero__badge { position: absolute; left: 18px; top: 18px; background: var(--paper); color: var(--teal); border-radius: 99px; padding: 9px 13px; font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; box-shadow: 0 4px 18px rgba(31, 47, 45, 0.15); }
+  .hero__bar { display: grid; grid-template-columns: 1fr 1fr 1.12fr; margin-top: 12px; border: 1px solid var(--line); border-radius: var(--radius-sm); overflow: hidden; background: #fff; }
+  .hero__bar :global(.hero__barbtn) { border-radius: 0; border: 0; border-right: 1px solid var(--line); justify-content: center; box-shadow: none; font-size: 12px; padding: 13px 8px; text-align: center; }
+  .hero__bar :global(.hero__barbtn:last-child) { border-right: 0; }
+
+  .claim { background: var(--cream); padding: 78px 0; }
+  .claim__inner { display: grid; grid-template-columns: 43% 57%; gap: 74px; align-items: center; }
+  .claim__photo { border-radius: var(--radius-sm); overflow: hidden; box-shadow: var(--shadow-card); aspect-ratio: 4 / 5; }
+  .claim__photo :global(img) { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .claim__lede { margin: 0 0 25px; max-width: 500px; }
+  .claim__ticks { list-style: none; margin: 0 0 29px; padding: 0; display: grid; gap: 13px; font-size: 13px; font-weight: 600; }
+  .claim__ticks li { display: flex; gap: 10px; align-items: flex-start; }
+  .claim__ticks li::before { content: '✓'; flex: 0 0 23px; width: 23px; height: 23px; border-radius: 50%; background: #fffaf0; color: var(--teal); display: grid; place-items: center; font-size: 12px; }
+  .claim__actions { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+
+  .block { padding: 82px 24px 90px; }
+  .grid { display: grid; gap: 17px; }
+  .grid--3 { grid-template-columns: repeat(3, 1fr); gap: 17px; }
+  .card__media { overflow: hidden; }
+  .card__media--4x5 { aspect-ratio: 4 / 5; }
+  .card__media :global(img) { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .card__title-sm { font-size: 17px !important; }
+
+  .featured { background: var(--teal-deep); color: #fff; padding: 84px 0; }
+  .featured__inner { display: grid; grid-template-columns: 47% 53%; gap: 85px; align-items: center; }
+  .featured__media { display: grid; grid-template-columns: 44% 56%; gap: 16px; align-items: center; }
+  .featured__sheet { border-radius: 6px; overflow: hidden; box-shadow: 0 18px 38px rgba(0, 0, 0, 0.22); aspect-ratio: 2 / 3; }
+  .featured__result { border-radius: 6px; overflow: hidden; box-shadow: 0 18px 38px rgba(0, 0, 0, 0.22); aspect-ratio: 3 / 4; }
+  .featured__media :global(img) { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .featured__eyebrow { color: var(--mint); }
+  .featured__lede { font-size: 16px; line-height: 1.55; color: #d1e6e2; margin: 0 0 24px; max-width: 520px; }
+  .pills { display: flex; gap: 8px; margin-bottom: 28px; flex-wrap: wrap; }
+  .pills span { border: 1px solid #80b6b1; border-radius: 99px; padding: 8px 12px; font-size: 11px; font-weight: 700; color: #d9ece8; }
+  .featured__actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+  @media (max-width: 1000px) {
+    .grid--3 { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 900px) {
+    .hero, .claim__inner, .featured__inner { grid-template-columns: 1fr; gap: 34px; }
+    .claim { padding: 56px 0; }
+    .block { padding: 56px 24px 60px; }
+    .featured { padding: 56px 0; }
+    .hero__bar { grid-template-columns: 1fr; }
+  }
+</style>

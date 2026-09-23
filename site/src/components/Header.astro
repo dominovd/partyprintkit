@@ -1,0 +1,23 @@
+---
+import Link from './Link.astro';
+import { nav, site } from '../data/site';
+---
+
+<header class="site-header">
+  <div class="wrap site-header__inner">
+    <a class="brand" href="/">Party<i>Print</i>Kit</a>
+    <nav aria-label="Main">
+      {nav.map((route) => <Link route={route} />)}
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header { border-bottom: 1px solid rgba(33, 52, 59, 0.1); }
+  .site-header__inner { display: flex; align-items: center; justify-content: space-between; min-height: 80px; gap: 24px; }
+  .brand { font-family: var(--font-display); font-size: 25px; letter-spacing: -1.2px; font-weight: 700; text-decoration: none; }
+  .brand i { font-style: normal; color: var(--coral); }
+  nav { display: flex; gap: 31px; align-items: center; font-size: 14px; font-weight: 600; }
+  nav :global(a) { text-decoration: none; }
+  nav :global(a:hover) { color: var(--teal); }
+</style>

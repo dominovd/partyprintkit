@@ -1,0 +1,30 @@
+---
+interface FaqItem { q: string; a: string; }
+interface Props { eyebrow: string; heading: string; lede?: string; items: FaqItem[]; }
+const { eyebrow, heading, lede, items } = Astro.props;
+---
+
+<section class="faq">
+  <div class="wrap">
+    <div class="faq__head">
+      <p class="eyebrow">{eyebrow}</p>
+      <h2 class="h3">{heading}</h2>
+      {lede && <p>{lede}</p>}
+    </div>
+    <div class="faq__grid">
+      {
+        /* <details> keeps every answer in the markup whether it is open or not,
+           so collapsing costs nothing for crawlers or for the FAQPage block. */
+        items.map((item) => (
+          <details class="faq__item">
+            <summary>
+              <span>{item.q}</span>
+              <span class="faq__icon" aria-hidden="true" />
+            </summary>
+            <p set:html={item.a} />
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>

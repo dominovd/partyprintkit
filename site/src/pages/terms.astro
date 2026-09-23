@@ -1,0 +1,65 @@
+---
+import TextPage from '../layouts/TextPage.astro';
+import Link from '../components/Link.astro';
+import { routes } from '../data/site';
+---
+
+<TextPage
+  title="Terms of Use: PartyPrintKit Printables Licence"
+  description="What you may and may not do with PartyPrintKit files: free for personal, classroom and community use, no resale of the files or the printed pieces."
+  path="/terms/"
+  crumb="Terms of use"
+  eyebrow="Terms"
+  heading="Terms of use."
+  lede="Plain wording, because a licence nobody reads protects nobody."
+  updated="2026-09-04"
+>
+  <h2>What you may do</h2>
+  <ul>
+    <li>Download and print the files for your own party, at home or at a print shop.</li>
+    <li>Use them at a school, library, church, club or community event.</li>
+    <li>Print as many copies as your own event needs.</li>
+    <li>Photograph your finished decorations and share the photographs, including on social media.</li>
+  </ul>
+
+  <h2>What you may not do</h2>
+  <ul>
+    <li>Sell, licence or give away the files themselves, edited or unedited.</li>
+    <li>Sell the printed pieces, as a product or as part of a party package.</li>
+    <li>Upload the files to another site, a file locker, a template marketplace or a print-on-demand service.</li>
+    <li>Present the artwork as your own, or remove the credit that sits outside the cut area.</li>
+  </ul>
+
+  <div class="callout">
+    <p>
+      The short version: the printed decorations are yours, the artwork stays ours. If you want to
+      do something these terms do not cover, ask at
+      <a href="mailto:info@partyprintkit.com">info@partyprintkit.com</a> rather than guessing.
+    </p>
+  </div>
+
+  <h2>Copyright</h2>
+  <p>
+    All artwork, layouts and photographs on this site are the property of PartyPrintKit. Downloading
+    a file grants the use described above and nothing more.
+  </p>
+
+  <h2>No warranty</h2>
+  <p>
+    The files are provided as they are. They are tested on home printers at A4 and US Letter, but
+    printers, drivers and paper vary, and we cannot guarantee a particular result on your machine.
+    Print one test page before a large run. The <Link route={routes.printingGuide} class="text-link" label="printing guide" />
+    covers the settings that matter.
+  </p>
+
+  <h2>Links to other sites</h2>
+  <p>
+    Where this site links elsewhere, that site has its own terms and its own privacy practices.
+  </p>
+
+  <h2>Changes</h2>
+  <p>
+    These terms may be updated. The date at the top of this page is the date of the current version,
+    and it applies from that date onward.
+  </p>
+</TextPage>

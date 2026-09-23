@@ -1,0 +1,36 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+
+interface Props {
+  href: string;
+  label: string;
+  variant?: 'primary' | 'ghost' | 'teal';
+  newTab?: boolean;
+  class?: string;
+}
+
+const { href, label, variant = 'primary', newTab = false, class: cls = '' } = Astro.props;
+
+/** A button never points at a file that is not in public/. Missing files render
+ *  disabled with the expected path, so the gap is visible instead of a 404. */
+const local = href.startsWith('/');
+const exists = local ? fs.existsSync(path.join(process.cwd(), 'public', href.replace(/^\//, ''))) : true;
+const cn = ['button', variant === 'ghost' && 'button--ghost', variant === 'teal' && 'button--teal', cls]
+  .filter(Boolean)
+  .join(' ');
+---
+
+{
+  exists ? (
+    <a class={cn} href={href} target={newTab ? '_blank' : undefined} rel={newTab ? 'noopener' : undefined}>
+      {label}
+    </a>
+  ) : (
+    <span class={`${cn} button--pending`} title={`Not generated yet: public${href}`}>{label}</span>
+  )
+}
+
+<style is:global>
+  .button--pending { background: #e9e1d1; color: #8b8072; box-shadow: none; cursor: not-allowed; border: 1px dashed #c3b49a; }
+</style>

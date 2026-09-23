@@ -1,0 +1,93 @@
+---
+import TextPage from '../layouts/TextPage.astro';
+import Link from '../components/Link.astro';
+import { routes } from '../data/site';
+---
+
+<TextPage
+  title="Printing Guide: Paper, Size and Cutting for Party Printables"
+  description="How to print party printables at home: paper weight, printing at 100% instead of Fit to page, cutting on the 0.25 pt dashed line, punching holes and hanging a banner."
+  path="/printing-guide/"
+  crumb="Printing guide"
+  eyebrow="Before you print"
+  heading="Printing guide."
+  lede="Everything on this site is made for a home printer and ordinary paper. These are the four settings that decide whether the result looks like a shop-bought decoration."
+  updated="2026-09-04"
+>
+  <h2>Print at 100%, never Fit to page</h2>
+  <p>
+    Every sheet is drawn at true size. <b>Fit to page</b> shrinks it by a few percent to clear the
+    printer margin, and each flag comes out a slightly different width from the last batch. Choose
+    <b>Actual size</b> in the print dialog, or set the scale to 100%.
+  </p>
+  <p>
+    A4 and US Letter are separate files. Print the one that matches the paper in your tray: printing
+    the A4 file on Letter reintroduces the same scaling problem.
+  </p>
+
+  <h2>Paper</h2>
+  <table>
+    <thead>
+      <tr><th>Piece</th><th>Paper</th><th>Why</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Banner flags</td><td>90 to 120 gsm</td><td>Light enough to hang in a curve without pulling the string down</td></tr>
+      <tr><td>Party hats</td><td>160 to 200 gsm matte card</td><td>Holds a cone shape and takes a glue tab</td></tr>
+      <tr><td>Cupcake toppers</td><td>160 to 200 gsm matte card</td><td>Stands up on a stick instead of flopping</td></tr>
+      <tr><td>Signs</td><td>160 to 200 gsm matte card</td><td>Stands in a frame or small easel</td></tr>
+      <tr><td>Favor tags</td><td>160 to 200 gsm matte card</td><td>Survives a punched hole and a knot</td></tr>
+    </tbody>
+  </table>
+  <p>
+    Matte, not glossy. Glossy stock smudges under inkjet ink and reflects badly in photographs. If
+    your printer struggles with card, feed it one sheet at a time through the rear or manual tray.
+  </p>
+
+  <h2>Ink</h2>
+  <p>
+    None of the sheets use a full-page colour fill: the background of every flag, sign and tag is
+    the paper itself. That keeps a whole kit inside a fraction of a cartridge and stops thin paper
+    from cockling. Print one test page before committing to a thirteen-letter banner, so you can
+    check colour and scale on a single sheet.
+  </p>
+
+  <h2>Cutting</h2>
+  <p>
+    Cut along the dashed 0.25 pt outline. Scissors are fine for the straight edges; a craft knife
+    and a metal ruler give a cleaner line on long cuts. Keep the small top margin on each banner
+    flag, it holds the hanging holes.
+  </p>
+  <p>
+    The site credit sits outside the cut line on every sheet, so it ends up in the offcut and never
+    on the finished decoration.
+  </p>
+
+  <h2>Assembly</h2>
+  <p>
+    <b>Banners.</b> Punch the two marked holes near the top corners and thread cotton string or
+    narrow ribbon through the back of each flag. Leave a small gap between letters so the message
+    curves naturally instead of hanging as a straight line.
+  </p>
+  <p>
+    <b>Hats.</b> Cut the sector, roll it into a cone and glue the marked tab under the opposite
+    edge. A small hole either side takes elastic.
+  </p>
+  <p>
+    <b>Toppers.</b> Cut two circles, tape a wooden pick between them and push into the frosting.
+  </p>
+
+  <div class="callout">
+    <p>
+      <b>Nothing prints?</b> Open the PDF in a real PDF reader rather than a browser preview: some
+      browsers reflow the page and quietly rescale it. The paper size is stored in the file, so a
+      reader that respects it will do the right thing at 100%.
+    </p>
+  </div>
+
+  <h2>Licence</h2>
+  <p>
+    Every file is free for personal use: your party, your classroom, your community event. Reselling
+    the files or the printed pieces is not allowed. Full wording on the{' '}
+    <Link route={routes.terms} class="text-link" label="terms of use" /> page.
+  </p>
+</TextPage>

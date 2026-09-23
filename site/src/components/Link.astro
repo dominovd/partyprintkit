@@ -1,0 +1,19 @@
+---
+import type { Route } from '../data/site';
+
+interface Props { route: Route; class?: string; label?: string; }
+const { route, class: cls = '', label } = Astro.props;
+const text = label ?? route.label;
+---
+
+{
+  route.built ? (
+    <a href={route.href} class={cls}>
+      <slot>{text}</slot>
+    </a>
+  ) : (
+    <span class={`link-pending ${cls}`} title={`Not built yet: ${route.href}`}>
+      <slot>{text}</slot>
+    </span>
+  )
+}

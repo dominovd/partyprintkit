@@ -1,0 +1,19 @@
+---
+import Link from './Link.astro';
+import type { Route } from '../data/site';
+
+interface Props { trail: Route[]; current: string; }
+const { trail, current } = Astro.props;
+---
+
+<nav class="crumbs" aria-label="Breadcrumb">
+  {trail.map((route) => (<><Link route={route} /><span aria-hidden="true">›</span></>))}
+  <span class="crumbs__current">{current}</span>
+</nav>
+
+<style>
+  .crumbs { display: flex; gap: 9px; align-items: center; font-size: 12px; color: var(--ink-soft); padding: 18px 0 4px; flex-wrap: wrap; }
+  .crumbs :global(a) { color: var(--ink-soft); text-decoration: none; }
+  .crumbs :global(a:hover) { color: var(--teal); }
+  .crumbs__current { color: var(--ink); font-weight: 600; }
+</style>

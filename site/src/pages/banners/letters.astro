@@ -1,0 +1,154 @@
+---
+import Base from '../../layouts/Base.astro';
+import Shot from '../../components/Shot.astro';
+import Link from '../../components/Link.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import DownloadButton from '../../components/DownloadButton.astro';
+import TrustBar from '../../components/TrustBar.astro';
+import FaqBlock from '../../components/FaqBlock.astro';
+import { routes, site } from '../../data/site';
+import { pinUrl } from '../../data/pin';
+
+const path = '/banners/letters/';
+const socialImage = '/social/banner-letters-geometric-1000x1500.jpg';
+
+const pin = pinUrl({
+  path,
+  media: socialImage,
+  description: 'Free printable banner letters: full alphabet, numbers and punctuation, PDF for A4 and US Letter.',
+});
+
+const faq = [
+  {
+    q: 'What is on the alphabet sheet?',
+    a: "A to Z, 0 to 9, ampersand, exclamation and question marks, period, comma, apostrophe, hyphen and a blank flag. Each page holds one true-size 5 × 7 flag.",
+  },
+  {
+    q: 'Can I spell a name or an age?',
+    a: 'That is what the sheet is for. HAPPY 40TH BIRTHDAY, a first name, a nickname, a team, anything that fits the wall.',
+  },
+  {
+    q: 'Do the letters match the ready-made banners?',
+    a: 'Yes. Same pennant shape, same 0.25 pt cut line and same hanging holes as the <a href="/birthday/banners/">printable happy birthday banner</a>, so a custom word can join a ready-made set.',
+  },
+  {
+    q: 'What paper works best?',
+    a: 'Regular 90–120 gsm paper is enough for a light banner. Matte 160–200 gsm cardstock gives flags that hang flat and last through the party.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Printable Banner Letters',
+    url: site.origin + path,
+    primaryImageOfPage: {
+      '@type': 'ImageObject',
+      contentUrl: site.origin + socialImage,
+      width: 1000,
+      height: 1500,
+      caption: 'Printable banner letters sheet with the full alphabet',
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: site.origin + '/' },
+      { '@type': 'ListItem', position: 2, name: 'Banners', item: site.origin + '/banners/' },
+      { '@type': 'ListItem', position: 3, name: 'Letters', item: site.origin + path },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map((item) => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: { '@type': 'Answer', text: item.a.replace(/<[^>]+>/g, '') },
+    })),
+  },
+];
+---
+
+<Base
+  title="Printable Banner Letters: Free Alphabet PDF for A4 and US Letter"
+  description="Free printable banner letters: the full alphabet, numbers and punctuation as pennant flags. Spell any name, age or message. Print-ready PDF for A4 and US Letter, no sign-up."
+  path={path}
+  socialImage={socialImage}
+  jsonLd={jsonLd}
+>
+  <div class="wrap">
+    <Breadcrumb trail={[routes.home, routes.banners]} current="Letters" />
+  </div>
+
+  <section class="wrap top">
+    <div>
+      <p class="eyebrow">Spell anything</p>
+      <h1 class="h1">Printable Banner Letters</h1>
+      <p class="lede top__lede">
+        The full alphabet as pennant flags, plus numbers and punctuation. Print the letters you need
+        and spell any message: a name, an age, a welcome, a joke.
+      </p>
+      <div class="top__buttons">
+        <DownloadButton href="/downloads/banner-letters-geometric-a4.pdf" label="Download PDF · A4" newTab />
+        <DownloadButton href="/downloads/banner-letters-geometric-letter.pdf" label="PDF · US Letter" variant="ghost" newTab />
+        <DownloadButton href="/downloads/banner-letters-geometric-1000x1500.png" label="Download PNG" variant="ghost" />
+        <a class="button button--teal" href={pin} target="_blank" rel="noopener">Save to Pinterest</a>
+      </div>
+      <p class="top__note">No sign-up · no watermark · personal use</p>
+    </div>
+    <figure class="top__sheet">
+      <Shot id="letters-alphabet-sheet" loading="eager" sizes="(max-width: 900px) 92vw, 420px" />
+      <figcaption>The sheet you print · 1000 × 1500</figcaption>
+    </figure>
+  </section>
+
+  <TrustBar
+    headline="Printable letters, ready to spell."
+    items={['A to Z, 0 to 9', 'Punctuation and blank flag', 'Same 5 × 7 cut and holes as the geometric kit']}
+  />
+
+  <section class="wrap block">
+    <p class="eyebrow">How to use the sheet</p>
+    <h2 class="h3">Print only the pages you need.</h2>
+    <div class="cols">
+      <p>
+        <b>Pick the message.</b> Write the wording out and note each character’s page number. The PDF
+        puts one true-size flag on each page, so the print dialog page range lets you print only the
+        letters and punctuation you need.
+      </p>
+      <p>
+        <b>Print at 100%.</b> Choose “Actual size” rather than “Fit to page”, so every flag comes out
+        the same width and the letters line up on the string.
+      </p>
+      <p>
+        <b>Cut and hang.</b> Cut on the dashed 0.25 pt outline, punch the two marked holes and thread
+        string through the back. Leave a small gap between letters so the line curves.
+      </p>
+      <p>
+        <b>Mix with the geometric set.</b> The flags use the same outline, motif row and hanging holes
+        as the <Link route={routes.birthdayBanners} class="text-link" label="released birthday banner" />.
+      </p>
+    </div>
+  </section>
+
+  <FaqBlock eyebrow="Common questions" heading="Before you download." items={faq} />
+</Base>
+
+<style>
+  .top { display: grid; grid-template-columns: 55% 45%; gap: 55px; align-items: center; padding: 30px 24px 70px; }
+  .top__lede { margin: 22px 0 26px; max-width: 520px; }
+  .top__buttons { display: flex; gap: 10px; flex-wrap: wrap; }
+  .top__buttons :global(.button) { font-size: 12px; padding: 13px 15px; }
+  .top__note { font-size: 11px; color: var(--ink-soft); margin: 14px 0 0; }
+  .top__sheet { margin: 0; }
+  .top__sheet :global(img) { display: block; width: 100%; border-radius: 6px; box-shadow: var(--shadow-card); }
+  .top__sheet figcaption { font-size: 10px; letter-spacing: 0.8px; text-transform: uppercase; color: var(--ink-soft); margin-top: 10px; font-weight: 700; }
+  .block { padding: 10px 24px 80px; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 40px; margin-top: 26px; }
+  .cols p { font-size: 14px; line-height: 1.6; color: var(--ink-soft); margin: 0; }
+  .cols b { color: var(--ink); }
+  @media (max-width: 900px) { .top, .cols { grid-template-columns: 1fr; gap: 30px; } }
+</style>

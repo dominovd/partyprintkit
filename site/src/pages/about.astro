@@ -1,0 +1,48 @@
+---
+import TextPage from '../layouts/TextPage.astro';
+import Link from '../components/Link.astro';
+import { routes } from '../data/site';
+---
+
+<TextPage
+  title="About PartyPrintKit"
+  description="Who makes PartyPrintKit, why every kit ships as one coordinated PDF, and what free actually means here: no editor, no account and no watermark."
+  path="/about/"
+  crumb="About"
+  eyebrow="About"
+  heading="About PartyPrintKit."
+  lede="Free printable party decorations that already belong together, made to print on the paper you have at home."
+>
+  <h2>Why a kit and not a template</h2>
+  <p>
+    Most free party printables are single files from unrelated sources: a banner in one style, hats
+    in another, toppers in a third. They print fine and look like three different parties on one
+    table. Everything here is drawn as a set, so the banner, hats, toppers, signs and tags share a
+    palette, a shape language and a cut line.
+  </p>
+  <p>
+    There is no editor, no account and no watermark. You download a PDF, print it and cut it out.
+  </p>
+
+  <h2>Made for a real printer</h2>
+  <p>
+    Every sheet is designed against the constraints of a home inkjet: no full-page colour fills,
+    nothing thinner than half a point, true A4 and US Letter files instead of one file scaled to
+    fit. The reasoning behind each of those choices is in the{' '}
+    <Link route={routes.printingGuide} class="text-link" label="printing guide" />.
+  </p>
+
+  <h2>Who makes it</h2>
+  <p>
+    PartyPrintKit is a small independent project, not a marketplace and not a template farm. Every
+    kit is drawn, printed and assembled before it is published, and the photographs on the site are
+    of the actual printed pieces.
+  </p>
+
+  <h2>Get in touch</h2>
+  <p>
+    Requests for an occasion, a design or a piece that is missing are welcome, and so are reports of
+    anything that prints wrong. Write to <a href="mailto:info@partyprintkit.com">info@partyprintkit.com</a>
+    or use the <Link route={routes.contact} class="text-link" label="contact page" />.
+  </p>
+</TextPage>

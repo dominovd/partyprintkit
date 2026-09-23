@@ -1,0 +1,159 @@
+---
+import Base from '../../layouts/Base.astro';
+import Shot from '../../components/Shot.astro';
+import Link from '../../components/Link.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import FaqBlock from '../../components/FaqBlock.astro';
+import { routes, site } from '../../data/site';
+import type { ShotId } from '../../data/images';
+
+const path = '/banners/';
+const socialImage = '/social/birthday-banner-botanical-1000x1500.jpg';
+
+type Card = { title: string; blurb: string; detail: string; shot: ShotId; route: typeof routes.banners };
+
+const banners: Card[] = [
+  {
+    title: 'Happy birthday banner',
+    blurb: 'Ready to print',
+    detail: 'Thirteen letter flags spelling HAPPY BIRTHDAY, in a botanical and a geometric design.',
+    shot: 'banner-hung-botanical',
+    route: routes.birthdayBanners,
+  },
+  {
+    title: 'Banner letters',
+    blurb: 'Spell anything',
+    detail: 'The full alphabet, numbers and punctuation, for a name, an age or a message of your own.',
+    shot: 'letters-alphabet-sheet',
+    route: routes.bannerLetters,
+  },
+];
+
+const faq = [
+  {
+    q: 'What size is a banner flag?',
+    a: 'Every flag is 5 × 7 inches when the PDF is printed at 100%, whichever banner you take. The size never changes between designs, so flags from two downloads hang in one line.',
+  },
+  {
+    q: 'How do I hang them?',
+    a: 'Punch the two marked holes near the top corners and thread cotton string or narrow ribbon through the back. Leave a small gap between letters so the line curves.',
+  },
+  {
+    q: 'A4 or US Letter?',
+    a: 'Both. Each banner comes as two separate print-ready files, so nothing is scaled or cropped to fit the other paper.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Printable party banners',
+    url: site.origin + path,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: site.origin + '/' },
+      { '@type': 'ListItem', position: 2, name: 'Banners', item: site.origin + path },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map((item) => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: { '@type': 'Answer', text: item.a },
+    })),
+  },
+];
+---
+
+<Base
+  title="Printable Party Banners: Free Letter Flags for A4 and US Letter"
+  description="Free printable party banners: a ready-made happy birthday banner and the full banner alphabet. True-size 5 × 7 in flags, print-ready PDFs, no editor and no sign-up."
+  path={path}
+  socialImage={socialImage}
+  jsonLd={jsonLd}
+>
+  <div class="wrap">
+    <Breadcrumb trail={[routes.home, routes.printables]} current="Banners" />
+  </div>
+
+  <section class="wrap head">
+    <div>
+      <p class="eyebrow">Printable party banners</p>
+      <h1 class="h1">Party banners.</h1>
+    </div>
+    <p class="head__lede">
+      Take a banner that is already spelled out, or take the alphabet and spell your own. Same flag
+      size, same cut line, same paper either way.
+    </p>
+  </section>
+
+  <section class="wrap grid">
+    {
+      banners.map((banner) => (
+        <Link route={banner.route} class="card">
+          <div class="card__media">
+            <Shot id={banner.shot} sizes="(max-width: 900px) 92vw, 580px" />
+          </div>
+          <div class="card__body">
+            <h2>{banner.title}</h2>
+            <p class="card__blurb">{banner.blurb}</p>
+            <p class="card__detail">{banner.detail}</p>
+          </div>
+        </Link>
+      ))
+    }
+  </section>
+
+  <section class="note">
+    <div class="wrap note__inner">
+      <div>
+        <p class="eyebrow note__eyebrow">Before you print</p>
+        <h2 class="h2">One flag size, always.</h2>
+      </div>
+      <div class="note__cols">
+        <p>
+          <b>5 × 7 inches.</b> Every flag on this site is drawn at the same true size, so a name in
+          the alphabet sheet hangs level with a ready-made banner from another download.
+        </p>
+        <p>
+          <b>90 to 120 gsm.</b> Light enough to curve on the string. Heavier cardstock works, but
+          pulls the line straight. Full instructions are in the
+          <Link route={routes.printingGuide} class="text-link" label="printing guide" />.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <FaqBlock eyebrow="Common questions" heading="About the banners." items={faq} />
+</Base>
+
+<style>
+  .head { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 40px; align-items: end; padding: 20px 24px 34px; }
+  .head__lede { font-size: 14px; line-height: 1.6; color: var(--ink-soft); margin: 0 0 6px; }
+
+  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; padding: 0 24px 80px; }
+  .grid :global(.card__media) { aspect-ratio: 4 / 3; overflow: hidden; background: var(--cream-soft); display: grid; place-items: center; }
+  .grid :global(.card__media img) { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .grid :global(.card__body) { padding: 18px 19px 22px; }
+  .grid :global(.card__body h2) { font-size: 22px; letter-spacing: -0.8px; margin: 0 0 4px; }
+  .card__blurb { font-size: 11px !important; font-weight: 700; letter-spacing: 0.7px; text-transform: uppercase; color: var(--teal) !important; margin: 0 0 10px !important; }
+  .card__detail { font-size: 13px !important; line-height: 1.55; }
+
+  .note { background: var(--teal-deep); color: #fff; padding: 64px 0; }
+  .note__inner { display: grid; grid-template-columns: 34% 66%; gap: 50px; }
+  .note__eyebrow { color: var(--mint); }
+  .note__cols { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; }
+  .note__cols p { font-size: 13px; line-height: 1.6; color: #d1e6e2; margin: 0; }
+  .note__cols b { color: #fff; }
+  .note :global(.text-link) { color: #bfe3de; border-bottom-color: #6fa8a2; }
+
+  @media (max-width: 1000px) {
+    .head, .grid, .note__inner, .note__cols { grid-template-columns: 1fr; gap: 20px; }
+  }
+</style>

@@ -1,0 +1,14 @@
+# build output
+site/dist/
+site/node_modules/
+site/.astro/
+
+# generated: rebuilt by `npm run assets` from scripts/
+output/
+
+# local scratch
+tmp/
+.playwright-cli/
+Claude outputs/
+_*.tgz
+.DS_Store

@@ -1,0 +1,53 @@
+---
+import TextPage from '../layouts/TextPage.astro';
+import Link from '../components/Link.astro';
+import { routes, site } from '../data/site';
+
+const email = 'info@partyprintkit.com';
+---
+
+<TextPage
+  title="Contact PartyPrintKit"
+  description="Contact PartyPrintKit: request an occasion or a design, report a file that prints wrong, or ask about using the printables at an event."
+  path="/contact/"
+  crumb="Contact"
+  eyebrow="Contact"
+  heading="Get in touch."
+  lede="One inbox, read by a person."
+>
+  <p class="contact-email">
+    <a href={`mailto:${email}`}>{email}</a>
+  </p>
+
+  <h2>What is worth writing about</h2>
+  <ul>
+    <li><b>A missing occasion or piece.</b> Requests decide what gets drawn next.</li>
+    <li><b>A file that prints wrong.</b> Tell us the file name, your paper size and your printer, and it gets fixed rather than explained away.</li>
+    <li><b>Using the printables at an event.</b> Schools, libraries and community events are covered by the <Link route={routes.terms} class="text-link" label="terms of use" />, but ask if your case is unusual.</li>
+    <li><b>Using a photograph or a sheet elsewhere.</b> Ask first, the answer is usually yes with a credit.</li>
+  </ul>
+
+  <h2>Before you write</h2>
+  <p>
+    Questions about paper weight, scaling and cutting are answered in the{' '}
+    <Link route={routes.printingGuide} class="text-link" label="printing guide" />. It covers the
+    two settings that cause almost every printing problem.
+  </p>
+
+  <div class="callout">
+    <p>
+      There is no contact form on purpose: a form needs a script, a spam filter and somewhere to
+      store what you typed. An email address needs none of that.
+    </p>
+  </div>
+</TextPage>
+
+<style>
+  .contact-email {
+    font-family: var(--font-display);
+    font-size: clamp(22px, 3vw, 30px) !important;
+    letter-spacing: -1px;
+    margin: 0 0 10px !important;
+  }
+  .contact-email a { color: var(--teal); text-decoration: none; border-bottom: 2px solid #a7cdc9; }
+</style>

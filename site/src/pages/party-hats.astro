@@ -1,0 +1,300 @@
+---
+import Base from '../layouts/Base.astro';
+import Shot from '../components/Shot.astro';
+import Link from '../components/Link.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import DownloadButton from '../components/DownloadButton.astro';
+import TrustBar from '../components/TrustBar.astro';
+import FaqBlock from '../components/FaqBlock.astro';
+import { partyHatDesigns } from '../data/kits';
+import { routes, site } from '../data/site';
+import { pinUrl } from '../data/pin';
+
+const path = '/party-hats/';
+const released = partyHatDesigns.filter((design) => design.released);
+const defaultDesign = released[0];
+const socialImage = defaultDesign.social;
+
+const pinDescription =
+  'Free printable party hat template. Two true-size cones, PDF for A4 and US Letter, no sign-up.';
+const pin = pinUrl({ path, media: socialImage, description: pinDescription });
+
+const faq = [
+  {
+    q: 'What size is the finished hat?',
+    a: 'The pattern is a 95 mm sector, so a finished cone is roughly 14 cm across the base and 6 to 7 cm tall: a wide, low party hat rather than a tall witch cone. It is printed at true size, never scaled to fit.',
+  },
+  {
+    q: 'What paper should I use?',
+    a: 'Matte cardstock of 160 to 200 gsm. Ordinary paper will roll into a cone but collapses as soon as it is worn. Feed card one sheet at a time through the rear or manual tray.',
+  },
+  {
+    q: 'How do I keep it on a head?',
+    a: 'Punch a small hole either side near the bottom edge and tie thin elastic between them. Elastic is more comfortable than a chin string and survives being pulled off and on all afternoon.',
+  },
+  {
+    q: 'Is there a matching banner?',
+    a: 'Yes. The hat shares its palette and cut lines with the whole kit, so it sits next to the <a href="/birthday/banners/">printable happy birthday banner</a> and the rest of the birthday set without looking borrowed.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Free Printable Party Hat Template',
+    url: site.origin + path,
+    primaryImageOfPage: {
+      '@type': 'ImageObject',
+      contentUrl: site.origin + socialImage,
+      width: 1000,
+      height: 1500,
+      caption: 'Printable party hat template sheet with two true-size cones',
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: site.origin + '/' },
+      { '@type': 'ListItem', position: 2, name: 'Printables', item: site.origin + '/printables/' },
+      { '@type': 'ListItem', position: 3, name: 'Party hats', item: site.origin + path },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map((item) => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: { '@type': 'Answer', text: item.a.replace(/<[^>]+>/g, '') },
+    })),
+  },
+];
+---
+
+<Base
+  title="Printable Party Hat Template: Free PDF Pattern for A4 and US Letter"
+  description="Free printable party hat template in two designs. Two true-size cones per sheet, print-ready PDF for A4 and US Letter plus a 1000×1500 PNG. No editor, no sign-up, no watermark."
+  path={path}
+  socialImage={socialImage}
+  jsonLd={jsonLd}
+>
+  <div class="wrap">
+    <Breadcrumb trail={[routes.home, routes.printables]} current="Party hats" />
+  </div>
+
+  <div class="design-scope">
+    {
+      released.map((design, i) => (
+        <input
+          class="picker__radio"
+          type="radio"
+          name="hat-design"
+          id={`design-${design.id}`}
+          checked={i === 0}
+        />
+      ))
+    }
+
+    <section class="wrap picker">
+      <div class="head">
+        <div>
+          <p class="eyebrow">Free party printables</p>
+          <h1 class="h1">Free Printable Party Hat Template</h1>
+        </div>
+        <p class="head__lede">
+          A party hat pattern printable at true size: cut the sector, roll it into a cone and glue
+          the marked tab. Two hats per download, no editor and no account.
+        </p>
+      </div>
+
+      <div class="stage">
+        <div class="stage__main">
+          {
+            released.map((design) => (
+              <figure class="pane" data-design={design.id}>
+                <Shot id={design.sheet} loading="eager" sizes="(max-width: 1000px) 92vw, 460px" />
+              </figure>
+            ))
+          }
+        </div>
+
+        <div class="thumbs" role="group" aria-label="Choose a design">
+          {
+            released.map((design) => (
+              <label class="thumb" for={`design-${design.id}`} data-design={design.id}>
+                <span class="thumb__img">
+                  <Shot id={design.sheet} sizes="200px" />
+                </span>
+                <span class="thumb__name">{design.name}</span>
+              </label>
+            ))
+          }
+        </div>
+
+        <p class="stage__caption">
+          Two designs of the same printable party hat template, botanical and geometric. Each PDF
+          holds two true-size cones on separate sheets, because a 95 mm sector does not fit twice on
+          A4 or US Letter without shrinking it.
+        </p>
+      </div>
+
+      <aside class="panel">
+        <p class="panel__flag">Free instant download</p>
+        {
+          released.map((design) => (
+            <div class="pane panel__body" data-design={design.id}>
+              <h2 class="panel__title">{design.title}</h2>
+              <p class="panel__sub">
+                Two party hat templates printable at 100%, with the glue tab and cut line marked.
+              </p>
+              <p class="panel__label">Files included</p>
+              <div class="pills">
+                <span>PDF · A4 · 2 pages</span><span>PDF · US Letter</span><span>PNG · 1000×1500</span>
+              </div>
+              <div class="panel__buttons">
+                <DownloadButton href={design.pdfA4} label="Download PDF · A4" newTab />
+                <DownloadButton href={design.pdfLetter} label="PDF · US Letter" variant="ghost" newTab />
+                <DownloadButton href={design.png} label="Download PNG" variant="ghost" />
+                <a
+                  class="button button--teal"
+                  href={pinUrl({ path, media: design.social, description: pinDescription })}
+                  target="_blank"
+                  rel="noopener">Save to Pinterest</a>
+              </div>
+            </div>
+          ))
+        }
+        <p class="panel__note">No sign-up · no watermark · personal use</p>
+        <p class="panel__note panel__note--small">
+          Print from the PDF, not from this page: the PDF holds the real paper size.
+        </p>
+      </aside>
+    </section>
+  </div>
+
+  <TrustBar
+    headline="A real hat, from printer to head."
+    items={['Download instantly', 'Print on cardstock', 'Cut and roll', 'Glue the tab']}
+    icons={['↓', '⌂', '✂', '○']}
+  />
+
+  <section class="assembly">
+    <div class="wrap assembly__inner">
+      <div>
+        <p class="eyebrow assembly__eyebrow">Printing &amp; assembly</p>
+        <h2 class="h2">From flat sheet to cone.</h2>
+        <p class="assembly__sub">
+          How to print and assemble a party hat template at home, from paper weight to elastic.
+        </p>
+      </div>
+      <div class="assembly__cols">
+        <div>
+          <p><b>Paper.</b> Matte cardstock, 160 to 200 gsm. Plain paper rolls fine and then folds the first time it is worn. Select “Actual size” or 100%: the sector radius is what decides whether the cone closes.</p>
+          <p><b>Cutting.</b> Cut the outer arc and both straight edges on the dashed 0.25 pt line. The tab on the left edge stays on: it is the glue flap, and the dotted coral line is where it folds.</p>
+        </div>
+        <div>
+          <p><b>Rolling.</b> Bring the two straight edges together, slide the tab under the opposite edge and press. A glue stick holds well enough; double-sided tape holds better if children are involved.</p>
+          <p><b>Wearing.</b> Punch a hole either side near the bottom rim and tie thin elastic between them. A pom pom or a paper tassel glued to the tip covers the small opening at the top.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap kit">
+    <div class="kit__media">
+      <Shot id="kit-sheets-flatlay-vertical" sizes="(max-width: 900px) 92vw, 380px" />
+    </div>
+    <div>
+      <p class="eyebrow">Part of a set</p>
+      <h2 class="h2">A hat is not a party.</h2>
+      <p class="lede kit__lede">
+        The hat shares its palette, its cut line and its paper with every other piece, so it can join
+        a banner, toppers, signs and tags instead of standing on its own.
+      </p>
+      <div class="kit__grid">
+        <Link route={routes.birthdayBanners} class="kit__card">
+          <b>Happy birthday banner</b>
+          <span>Thirteen letter flags in the same two designs</span>
+        </Link>
+        <Link route={routes.bannerLetters} class="kit__card">
+          <b>Banner letters</b>
+          <span>Full alphabet, spell any name or age</span>
+        </Link>
+      </div>
+      <DownloadButton
+        href="/downloads/birthday-kit-geometric-a4.pdf"
+        label="Download the complete birthday kit →"
+        newTab
+      />
+    </div>
+  </section>
+
+  <FaqBlock eyebrow="Common questions" heading="Before you download." items={faq} />
+</Base>
+
+<style>
+  .picker { display: grid; grid-template-columns: 1fr 360px; gap: 34px 30px; padding: 8px 24px 60px; align-items: start; }
+  .picker__radio { position: absolute; opacity: 0; pointer-events: none; }
+  .head { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 40px; align-items: end; margin-bottom: 6px; }
+  .head__lede { font-size: 13px; line-height: 1.55; color: var(--ink-soft); margin: 0 0 6px; }
+
+  .pane { display: none; margin: 0; }
+  .design-scope :global(#design-botanical:checked) ~ .picker [data-design='botanical'],
+  .design-scope :global(#design-geometric:checked) ~ .picker [data-design='geometric'] { display: block; }
+
+  /* The sheet is vertical and the stage is not: show it whole on paper rather
+     than cropping the product. */
+  .stage__main { position: relative; border-radius: var(--radius); overflow: hidden; background: var(--cream-soft); border: 1px solid var(--line); aspect-ratio: 4 / 3; }
+  .stage__main .pane { height: 100%; display: grid; place-items: center; padding: 22px; }
+  .stage__main :global(img) { max-height: 100%; width: auto; display: block; border-radius: 4px; box-shadow: var(--shadow-soft); }
+
+  .thumbs { display: grid; grid-template-columns: repeat(2, minmax(0, 160px)); gap: 14px; margin-top: 14px; }
+  .thumb { display: block; cursor: pointer; border: 2px solid transparent; border-radius: 6px; padding: 3px; }
+  .thumb__img { display: block; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 4px; background: var(--cream-soft); display: grid; place-items: center; }
+  .thumb :global(img) { max-height: 100%; width: auto; display: block; }
+  .thumb__name { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; color: var(--ink-soft); margin-top: 7px; }
+  .design-scope :global(#design-botanical:checked) ~ .picker .thumb[data-design='botanical'],
+  .design-scope :global(#design-geometric:checked) ~ .picker .thumb[data-design='geometric'] { border-color: var(--coral); }
+  .design-scope :global(#design-botanical:checked) ~ .picker .thumb[data-design='botanical'] .thumb__name,
+  .design-scope :global(#design-geometric:checked) ~ .picker .thumb[data-design='geometric'] .thumb__name { color: var(--ink); }
+
+  .stage__caption { font-size: 12px; line-height: 1.55; color: var(--ink-soft); margin: 16px 0 0; max-width: 620px; }
+
+  .panel { border: 1px solid var(--line); background: var(--paper-card); border-radius: var(--radius); padding: 24px 24px 22px; box-shadow: var(--shadow-soft); }
+  .panel__flag { display: inline-block; background: #e4f1ee; color: var(--teal); border-radius: 99px; padding: 7px 12px; font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin: 0 0 16px; }
+  .panel__title { font-size: 27px; letter-spacing: -1.1px; line-height: 1.08; margin: 0 0 8px; }
+  .panel__sub { font-size: 12px; color: var(--ink-soft); margin: 0 0 18px; line-height: 1.5; }
+  .panel__label { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: var(--ink-soft); font-weight: 700; margin: 0 0 9px; }
+  .pills { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 18px; }
+  .pills span { border: 1px solid var(--line); border-radius: 99px; padding: 6px 10px; font-size: 10px; font-weight: 700; color: var(--ink-soft); }
+  .panel__buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+  .panel__buttons :global(.button) { justify-content: center; text-align: center; font-size: 12px; padding: 13px 10px; }
+  .panel__note { text-align: center; font-size: 11px; color: var(--ink-soft); margin: 14px 0 0; }
+  .panel__note--small { font-size: 10px; margin-top: 6px; }
+
+  .assembly { background: var(--teal-deep); color: #fff; padding: 74px 0; }
+  .assembly__inner { display: grid; grid-template-columns: 34% 66%; gap: 50px; }
+  .assembly__eyebrow { color: var(--mint); }
+  .assembly__sub { font-size: 13px; line-height: 1.55; color: #cde3df; margin: 16px 0 0; max-width: 320px; }
+  .assembly__cols { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+  .assembly__cols p { font-size: 13px; line-height: 1.6; color: #d1e6e2; margin: 0 0 18px; }
+  .assembly__cols b { color: #fff; }
+
+  .kit { display: grid; grid-template-columns: 34% 66%; gap: 70px; align-items: center; padding: 80px 24px; }
+  .kit__media { border-radius: 6px; overflow: hidden; box-shadow: var(--shadow-card); }
+  .kit__media :global(img) { width: 100%; display: block; }
+  .kit__lede { margin: 0 0 24px; max-width: 520px; font-size: 16px; }
+  .kit__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 26px; }
+  .kit :global(.kit__card) { border: 1px solid var(--line); border-radius: 6px; padding: 13px 15px; background: var(--paper-card); text-decoration: none; color: inherit; display: block; }
+  .kit :global(.kit__card b) { display: block; font-size: 13px; margin-bottom: 3px; }
+  .kit :global(.kit__card span) { font-size: 11px; color: var(--ink-soft); }
+
+  @media (max-width: 1000px) {
+    .picker { grid-template-columns: 1fr; }
+    .head { grid-template-columns: 1fr; gap: 16px; align-items: start; }
+    .kit, .assembly__inner { grid-template-columns: 1fr; gap: 34px; }
+    .assembly__cols { grid-template-columns: 1fr; gap: 0; }
+  }
+</style>

@@ -1,0 +1,18 @@
+---
+interface Props { headline: string; items: string[]; icons?: string[]; }
+const { headline, items, icons = ['↓', '⌂', '✂'] } = Astro.props;
+---
+
+<section class="trust">
+  <div class="wrap trust__inner">
+    <strong>{headline}</strong>
+    {
+      items.map((item, i) => (
+        <div class="trust__item">
+          <span class="trust__circle" aria-hidden="true">{icons[i % icons.length]}</span>
+          {item}
+        </div>
+      ))
+    }
+  </div>
+</section>

@@ -1,0 +1,40 @@
+---
+import Base from '../layouts/Base.astro';
+import Link from '../components/Link.astro';
+import { routes } from '../data/site';
+---
+
+<Base
+  title="Page not found"
+  description="That page does not exist on PartyPrintKit. Start from the printables instead."
+  path="/404/"
+>
+  <section class="wrap miss">
+    <p class="eyebrow">404</p>
+    <h1 class="h2">This page went in the offcuts.</h1>
+    <p class="lede miss__lede">
+      Nothing here. The printables are all one click away, and every file is still free.
+    </p>
+    <ul class="miss__links">
+      <li><Link route={routes.printables} label="All printables" /></li>
+      <li><Link route={routes.banners} label="Party banners" /></li>
+      <li><Link route={routes.bannerLetters} label="Banner letters" /></li>
+      <li><Link route={routes.partyHats} label="Party hats" /></li>
+      <li><Link route={routes.printingGuide} label="Printing guide" /></li>
+    </ul>
+    <p class="miss__note">
+      Landed here from a link on this site? Tell us at
+      <a href="mailto:info@partyprintkit.com">info@partyprintkit.com</a> and it gets fixed.
+    </p>
+  </section>
+</Base>
+
+<style>
+  .miss { max-width: 640px; padding: 90px 24px 120px; }
+  .miss__lede { margin: 18px 0 30px; }
+  .miss__links { list-style: none; margin: 0 0 34px; padding: 0; display: grid; gap: 10px; }
+  .miss__links :global(a) { font-family: var(--font-display); font-size: 20px; font-weight: 600; color: var(--ink); text-decoration: none; border-bottom: 2px solid var(--line); padding-bottom: 3px; }
+  .miss__links :global(a:hover) { color: var(--teal); border-bottom-color: #89bdb7; }
+  .miss__note { font-size: 13px; color: var(--ink-soft); }
+  .miss__note a { color: var(--teal); font-weight: 600; }
+</style>

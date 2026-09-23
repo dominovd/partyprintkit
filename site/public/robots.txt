@@ -1,0 +1,10 @@
+# partyprintkit.com
+
+User-agent: *
+Allow: /
+
+# PDFs and PNGs are the product. They are meant to be found.
+Allow: /downloads/
+Allow: /social/
+
+Sitemap: https://partyprintkit.com/sitemap.xml
