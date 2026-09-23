@@ -42,6 +42,10 @@ const graph = path === '/' ? [website, ...jsonLd] : jsonLd;
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    <meta
+      name="google-site-verification"
+      content="YowI6w1NLxKV68XeT19OI_DcPCCNZV6q0BPjYnoJIYc"
+    />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={site.name} />
@@ -76,5 +80,10 @@ const graph = path === '/' ? [website, ...jsonLd] : jsonLd;
       <slot />
     </main>
     <Footer />
+
+    {/* Vercel Web Analytics, cookieless. The script is served by the platform
+        at this path, so no npm package and no client bundle. It 404s outside
+        Vercel, which is harmless. Speed Insights is deliberately not loaded. */}
+    <script is:inline defer src="/_vercel/insights/script.js"></script>
   </body>
 </html>
